@@ -1,0 +1,60 @@
+• Q1: Average person age per country code
+
+db.person.aggregate([{$group: {_id: "$countryCode", averageAge: {$avg: "$age"}}},
+    {$project: {_id: 0, countryCode: "$_id", averageAge: 1}}])
+
+    ```
+    { "averageAge" : 62, "countryCode" : "AU" }
+    { "averageAge" : 48, "countryCode" : "GB" }
+    { "averageAge" : 48.5, "countryCode" : "CA" }
+    { "averageAge" : 27.5, "countryCode" : "US" }
+    ```
+
+• Q2: Average person age per city name
+
+db.person.aggregate([{$group: {_id: "$cityName", averageAge: {$avg: "$age"}}},
+    {$project: {_id: 0, cityName: "$_id", averageAge: 1}}])
+    ```
+    { "averageAge" : 72, "cityName" : "New York" }
+    { "averageAge" : 45.44444444444444, "cityName" : "San Francisco" }
+    { "averageAge" : 79, "cityName" : "Washington" }
+    { "averageAge" : 30.166666666666668, "cityName" : "Miami" }
+    ```
+
+• Q3: Number of employees per company
+
+db.person.aggregate([{$group: {_id: "$worksIn", countOfEmployees: {$sum: 1}}},
+    {$project: {_id: 0, companyName: "$_id", countOfEmployees: 1}}])
+
+    ```
+    { "countOfEmployees" : 2, "companyName" : "Warst" }
+    { "countOfEmployees" : 1, "companyName" : "Beans" }
+    { "countOfEmployees" : 1, "companyName" : "Linger" }
+    { "countOfEmployees" : 1, "companyName" : "Buapel Inc." }
+    { "countOfEmployees" : 1, "companyName" : "FlyHigh" }
+    { "countOfEmployees" : 1, "companyName" : "Nonos Associates" }
+    { "countOfEmployees" : 1, "companyName" : "SuperMemo Inc." }
+    { "countOfEmployees" : 1, "companyName" : "Alist Company" }
+    { "countOfEmployees" : 1, "companyName" : "Furba Consulting" }
+    { "countOfEmployees" : 1, "companyName" : "Vitae Ltd" }
+    { "countOfEmployees" : 1, "companyName" : "MemorTech" }
+    { "countOfEmployees" : 1, "companyName" : "Robutenia" }
+    { "countOfEmployees" : 1, "companyName" : "Vitae" }
+    { "countOfEmployees" : 1, "companyName" : "QuickLink Company" }
+    { "countOfEmployees" : 1, "companyName" : "Erntogra Consulting" }
+    { "countOfEmployees" : 1, "companyName" : "Quisuc Industries" }
+    { "countOfEmployees" : 2, "companyName" : "Alist" }
+    { "countOfEmployees" : 1, "companyName" : "Buapel" }
+    ```
+
+• Q4: Number of employees per country
+
+db.person.aggregate([{$group: {_id: "$countryCode", countOfEmployees: {$sum: 1}}},
+    {$project: {_id: 0, countryCode: "$_id", countOfEmployees: 1}}])
+
+    ```
+    { "countOfEmployees" : 6, "countryCode" : "AU" }
+    { "countOfEmployees" : 6, "countryCode" : "GB" }
+    { "countOfEmployees" : 4, "countryCode" : "CA" }
+    { "countOfEmployees" : 4, "countryCode" : "US" }
+    ```
